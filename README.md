@@ -3,8 +3,9 @@
 ## Инициализация
 ```
 git clone https://github.com/ottomayerpy/test
-cd another_test
+cd test/another_test
 nano .env
+cd ..
 docker-compose up
 ```
 
