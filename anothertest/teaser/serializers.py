@@ -39,7 +39,7 @@ class TeaserUpdateAdminSerializer(ModelSerializer):
     def validate_status(self, value: str):
         if value != self.instance.status and self.instance.status != StatusChoice.PENDING:
             raise ValidationError(
-                f"Невозможно изменить статус с {self.instance.status}"
+                f"Невозможно изменить статус с {self.instance.get_status_display()}"
             )
         if value == StatusChoice.PAID and self.instance.status != StatusChoice.PAID:
             self.instance.author.wallet += PAYOUT_AMOUNT

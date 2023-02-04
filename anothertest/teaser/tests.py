@@ -1,12 +1,9 @@
 from anothertest.teaser.choices import StatusChoice
-from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from .models import Teaser
-
-User = get_user_model()
+from .models import Teaser, Person
 
 
 class AccountTests(APITestCase):
@@ -16,21 +13,21 @@ class AccountTests(APITestCase):
     # Задаём настройки для админа и пользователя
     def setUp(self):
 
-        self.admin = User.objects.create(username="admin", is_staff=True)
+        self.admin = Person.objects.create(username="admin", is_staff=True)
         self.admin.set_password("admin_pass")
         self.admin.save()
 
-        self.user = User.objects.create(username="user", is_staff=False)
+        self.user = Person.objects.create(username="user", is_staff=False)
         self.user.set_password("user_pass")
         self.user.save()
 
     # Создание тизера
-    def _create_teaser(self, user: User, data: dict):
+    def _create_teaser(self, user: Person, data: dict):
         self.client.force_authenticate(user=user)
         return self.client.post(reverse("teaser-list"), data=data)
 
     # Достаём список тизеров в зависимости от роли пользователя
-    def _list_teasers(self, user: User, home: bool = False):
+    def _list_teasers(self, user: Person, home: bool = False):
         self.client.force_authenticate(user)
         return self.client.get(
             reverse("teaser-home" if home else "teaser-list")
