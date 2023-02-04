@@ -8,6 +8,7 @@ nano .env
 cd ..
 docker-compose up
 ```
+Сервер доступен по адресу localhost:8000
 
 В .env кладем следующее:
 ```
