@@ -17,6 +17,7 @@ docker-compose up
   POSTGRES_HOST=db
   POSTGRES_PORT=5432
   PGDATA=/var/lib/postgresql/data/pgdata
+  PAYOUT_AMOUNT=50
 ```
 
 Супер пользователь - admin:admin

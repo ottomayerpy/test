@@ -1,5 +1,7 @@
+from anothertest.settings import PAYOUT_AMOUNT
 from rest_framework.serializers import ModelSerializer, ValidationError
 
+from .choices import StatusChoice
 from .models import Teaser
 
 
@@ -35,10 +37,13 @@ class TeaserUpdateAdminSerializer(ModelSerializer):
         при смене с "На рассмотрении" """
 
     def validate_status(self, value: str):
-        if self.instance.status != Teaser.Status.PENDING:
+        if value != self.instance.status and self.instance.status != StatusChoice.PENDING:
             raise ValidationError(
                 f"Невозможно изменить статус с {self.instance.status}"
             )
+        if value == StatusChoice.PAID and self.instance.status != StatusChoice.PAID:
+            self.instance.author.wallet += PAYOUT_AMOUNT
+            self.instance.author.save()
         return value
 
     class Meta:

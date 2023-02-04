@@ -12,7 +12,7 @@ ENVIRONMENT = BASE_DIR / ".env"
 if os.path.exists(ENVIRONMENT):
     environ.Env.read_env(ENVIRONMENT)
 else:
-    raise FileNotFoundError('Файл {} не найден'.format(ENVIRONMENT))
+    raise FileNotFoundError("Файл {} не найден".format(ENVIRONMENT))
 
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
@@ -29,6 +29,9 @@ INSTALLED_APPS = [
     "baseapp",
     "teaser",
 ]
+
+AUTH_USER_MODEL = "baseapp.Person"
+PAYOUT_AMOUNT = int(env("PAYOUT_AMOUNT", default=50))
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -69,11 +72,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        'NAME': env('POSTGRES_NAME'),
-        'USER': env('POSTGRES_USER', default=None),
-        'PASSWORD': env('POSTGRES_PASSWORD', default=None),
-        'HOST': env('POSTGRES_HOST', default='127.0.0.1'),
-        'PORT': env('POSTGRES_PORT', default='5432'),
+        "NAME": env("POSTGRES_NAME"),
+        "USER": env("POSTGRES_USER", default=None),
+        "PASSWORD": env("POSTGRES_PASSWORD", default=None),
+        "HOST": env("POSTGRES_HOST", default="127.0.0.1"),
+        "PORT": env("POSTGRES_PORT", default="5432"),
     }
 }
 
